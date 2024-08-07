@@ -1,0 +1,16 @@
+/* Add these styles to your CSS file */
+.authCodeInputContainer {
+  display: flex;
+  gap: 3px;
+  /* justify-content: space-between; */
+}
+
+.authCodeInput {
+  border: 3px solid #ccc;
+  padding: 10px;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  font-size: 30px;
+  border-radius: 10px;
+}
