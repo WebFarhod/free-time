@@ -1,45 +1,39 @@
 import { useRoutes, Outlet } from "react-router-dom";
-import { Suspense } from "react";
-import SignupPage from "../pages/signUp";
-import LoginPage from "../pages/login";
-import Verification from "../pages/verification";
-import Home from "../pages/dashboard/home";
-// import DashboardLayout from "./layouts/DashboardLayout";
-// import AdminIndexPage from "./pages/AdminIndexPage";
-// import AdminTeachers from "./pages/AdminTeachers";
-// import AdminClasses from "./pages/AdminClasses";
-// import AdminPrograms from "./pages/AdminPrograms";
-// import AdminNews from "./pages/AdminNews";
-// import AdminOpinions from "./pages/AdminOpinions";
-// import LoginPage from "./pages/LoginPage";
-// import SignupPage from "./pages/SignupPage";
+import { lazy, Suspense } from "react";
+
+const SignupPage = lazy(() => import("../pages/signUp"));
+const LoginPage = lazy(() => import("../pages/login"));
+const Verification = lazy(() => import("../pages/verification"));
+const Home = lazy(() => import("../pages/dashboard/home"));
+const DashboardLayout = lazy(() => import("../layouts/dashboard"));
+const Contact = lazy(() => import("../pages/dashboard/contact"));
+const Faq = lazy(() => import("../pages/dashboard/faq"));
+const Calendar = lazy(() => import("../pages/dashboard/calendar"));
 
 function Router() {
   const router = useRoutes([
     {
       path: "/",
       element: (
-        // <DashboardLayout>
-        <Suspense>
+        <DashboardLayout>
+          {/* <Suspense fallback={<>Loading</>}> */}
           <Outlet />
-        </Suspense>
-        // </DashboardLayout>
+          {/* </Suspense> */}
+        </DashboardLayout>
       ),
       children: [
         { element: <Home />, index: true },
-        // { path: "teachers", element: <AdminTeachers /> },
-        // { path: "classes", element: <AdminClasses /> },
-        // { path: "programs", element: <AdminPrograms /> },
-        // { path: "news", element: <AdminNews /> },
-        // { path: "opinions", element: <AdminOpinions /> },
+        { path: "/contact", element: <Contact /> },
+        { path: "/faq", element: <Faq /> },
+        { path: "/calendar", element: <Calendar /> },
       ],
     },
-    { path: "login", element: <LoginPage /> },
-    { path: "register", element: <SignupPage /> },
-    { path: "verification", element: <Verification /> },
+    { path: "/login", element: <LoginPage /> },
+    { path: "/register", element: <SignupPage /> },
+    { path: "/verification", element: <Verification /> },
   ]);
 
-  return router;
+  return <Suspense fallback={<p>Loading...</p>}>{router}</Suspense>;
 }
 
 export default Router;

@@ -8,10 +8,6 @@ import {
   Button,
   CircularProgress,
   Container,
-  createTheme,
-  CssBaseline,
-  ThemeProvider,
-  Typography,
 } from "@mui/material";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -20,8 +16,8 @@ import { AppDispatch, RootState } from "../redux/store";
 import { verification } from "../redux/actions/authActions";
 import { VerificationFormValues } from "../interface/verification";
 import { useNavigate } from "react-router-dom";
+import TextComponent from "../components/text/TextComponent";
 
-const defaultTheme = createTheme();
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export default function Verification() {
@@ -55,58 +51,58 @@ export default function Verification() {
     }
   }, [loggedIn]);
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs" className="">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+    <Container component="main" maxWidth="xs" className="">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar
+          sizes="20"
+          sx={{ m: 1, bgcolor: "secondary.main", width: 70, height: 70 }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Ro'yxatdan o'tish
-          </Typography>
-          <Box sx={{ mt: 3 }}>
-            <AuthCode
-              autoFocus={false}
-              onChange={handleOnChange}
-              ref={AuthInputRef}
-              containerClassName="authCodeInputContainer"
-              inputClassName="authCodeInput"
-            />
-          </Box>
-          {isLoading ? (
-            <Button
-              type="button"
-              fullWidth
-              disabled
-              variant="contained"
-              sx={{ mt: 3, mb: 2, gap: 5, mx: "auto" }}
-            >
-              <CircularProgress size={20} />
-              loading
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              fullWidth
-              disabled={data.length != 6}
-              variant="contained"
-              onClick={() => onSubmit()}
-              sx={{ mt: 3, mb: 2 }}
-            >
-              tasdiqlash
-            </Button>
-          )}
-          {/* <button onClick={() => AuthInputRef.current?.focus()}>Focus</button> */}
+          <LockOutlinedIcon fontSize="large" />
+        </Avatar>
+        <TextComponent variant="h2">Ro'yxatdan o'tish</TextComponent>
+
+        <Box sx={{ mt: 3 }}>
+          <AuthCode
+            autoFocus={false}
+            onChange={handleOnChange}
+            ref={AuthInputRef}
+            containerClassName="authCodeInputContainer"
+            inputClassName="authCodeInput"
+          />
         </Box>
-      </Container>
-    </ThemeProvider>
+        {isLoading ? (
+          <Button
+            type="button"
+            fullWidth
+            color="secondary"
+            disabled
+            variant="contained"
+            sx={{ mt: 3, mb: 2, gap: 5, mx: "auto" }}
+          >
+            <CircularProgress size={20} />
+            loading
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            fullWidth
+            color="secondary"
+            disabled={data.length != 6}
+            variant="contained"
+            onClick={() => onSubmit()}
+            sx={{ mt: 3, mb: 2 }}
+          >
+            tasdiqlash
+          </Button>
+        )}
+      </Box>
+    </Container>
   );
 }
